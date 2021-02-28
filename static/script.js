@@ -4,7 +4,7 @@ var degree = 180;
 var cache = 0;
 
 window.onload = function updateImage() {
-    document.getElementById("whiteboard").src = "/static/result.png?cache=" + cache++;
+    document.getElementById("whiteboard").src = `/static/result.png?cache=${cache++}`;
     setTimeout(updateImage, TIMEOUT);
 }
 
