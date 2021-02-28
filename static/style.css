@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #8FB399;
+    margin: 0;
+    padding: 0;
+}
+
+.column {
+    float: left;
+    padding: 0.5em;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 10%;
+    background-color: #3D5744;
+}
+
+.whiteboard {
+    width: 90%;
+    background-color: #8FB399;
+}
+
+.content:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.whiteboard img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.buttons {
+    background-color: #8FB399;
+    color: black;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1em;
+    max-width: 100%;
+}
