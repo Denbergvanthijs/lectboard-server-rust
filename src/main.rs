@@ -4,21 +4,22 @@
 extern crate rocket;
 
 use image::ImageFormat;
-use rocket::data::{FromDataSimple, Outcome};
-use rocket::http::Status;
-use rocket::Outcome::{Failure, Success};
-use rocket::{Data, Request};
-use rocket_contrib::json::Json;
-use rocket_contrib::serve::StaticFiles;
-use rocket_contrib::templates::Template;
+use local_ipaddress;
+use rocket::{
+    data::{FromDataSimple, Outcome},
+    http::Status,
+    Data,
+    Outcome::{Failure, Success},
+    Request,
+};
+use rocket_contrib::{json::Json, serve::StaticFiles, templates::Template};
 use serde::Serialize;
-use std::collections::HashMap;
-use std::io::Read;
+use std::{collections::HashMap, io::Read};
 
-#[get("/")]
-fn index() -> Template {
-    let context: HashMap<&str, &str> = HashMap::new();
-    Template::render("index", &context)
+#[derive(Serialize)]
+struct Host {
+    hostname: String,
+    port: u32,
 }
 
 #[derive(Debug)]
@@ -47,19 +48,17 @@ impl FromDataSimple for StoreImage {
     }
 }
 
+#[get("/")]
+fn index() -> Template {
+    let context: HashMap<&str, &str> = HashMap::new();
+    Template::render("index", &context)
+}
+
 #[post("/image", data = "<_input>")]
 fn post_image(_input: StoreImage) {}
 
-#[derive(Serialize)]
-struct Host {
-    hostname: String,
-    port: u32,
-}
-
 #[get("/hostname", format = "json")]
 fn get_hostname() -> Json<Host> {
-    use local_ipaddress;
-
     Json(Host {
         hostname: local_ipaddress::get().unwrap(),
         port: 5000,
